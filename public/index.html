@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ckb" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>کاری مانگانەی سەرپەرشتیارانی پەروەردەیی</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+  <script src="assets/vendor/jszip.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>کاری مانگانەی سەرپەرشتیارانی پەروەردەیی</h1>
+      <p>خشتەی چاڵاکی ڕۆژانە و پوختەی مانگانە</p>
+    </div>
+    <div class="actions">
+      <button type="button" class="button ghost" id="printSummaryButton">چاپکردنی پوختە</button>
+      <button type="button" class="button print" id="printButton">چاپکردنی هەموو</button>
+      <button type="button" class="button primary" id="excelButton">دابەزاندنی Excel</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <nav class="tabs" id="tabs" aria-label="خشتەکان"></nav>
+
+    <section class="panel main-page-panel" id="summaryPanel">
+      <div class="main-sheet" id="mainSheet" aria-label="پەڕەی سەرەکی">
+        <div class="main-meta">
+          <label class="main-cell">
+            <span>ساڵی خوێندن</span>
+            <input id="mainStudyYearInput" type="text" autocomplete="off">
+          </label>
+          <label class="main-cell">
+            <span>سەرۆک بەش</span>
+            <input id="mainHeadInput" type="text" autocomplete="off">
+          </label>
+        </div>
+
+        <div class="main-table-wrap">
+          <table class="main-list-table">
+            <colgroup>
+              <col class="main-index-col">
+              <col class="main-name-col">
+              <col class="main-series-col">
+              <col class="main-schools-col">
+              <col class="main-action-col">
+            </colgroup>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ناوی سەرپەرشتیارەکان</th>
+              <th>زنجیرە</th>
+              <th>ژمارەی قوتابخانەکانی</th>
+              <th>سڕینەوە</th>
+            </tr>
+          </thead>
+          <tbody id="mainInspectorsBody"></tbody>
+        </table>
+          <div class="main-actions">
+            <button type="button" class="button primary" id="addInspectorButton">زیادکردنی سەرپەرشتیار</button>
+            <button type="button" class="button print" id="mainSaveButton">هەڵگرتن</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="inspectorPanel" hidden>
+      <div class="panel-heading">
+        <h2 id="inspectorTitle"></h2>
+        <span id="inspectorMeta"></span>
+      </div>
+
+      <div class="field-grid inspector-settings">
+        <label>
+          <span>ساڵی خوێندن</span>
+          <input id="inspectorStudyYearInput" type="text" autocomplete="off">
+        </label>
+        <label>
+          <span>ساڵی ڕۆژژمێر</span>
+          <input id="inspectorActivityYearInput" type="number" min="2000" max="2100">
+        </label>
+        <label>
+          <span>مانگ</span>
+          <select id="inspectorMonthInput"></select>
+        </label>
+      </div>
+
+      <div class="field-grid inspector-fields">
+        <label>
+          <span>ناو</span>
+          <input id="inspectorNameInput" type="text" autocomplete="off">
+        </label>
+        <label>
+          <span>زنجیرە</span>
+          <input id="inspectorSeriesInput" type="text" autocomplete="off">
+        </label>
+        <label>
+          <span>ژمارەی قوتابخانەکان</span>
+          <input id="inspectorSchoolsInput" type="number" min="0">
+        </label>
+      </div>
+
+      <div class="table-wrap">
+        <table class="activity-table">
+          <thead>
+            <tr>
+              <th>ڕۆژ</th>
+              <th>ڕێکەوت</th>
+              <th>کورتەی کارو چاڵاکی ئەنجامدراو</th>
+            </tr>
+          </thead>
+          <tbody id="activitiesBody"></tbody>
+        </table>
+      </div>
+
+      <div class="split inspector-ending">
+        <section class="subpanel">
+          <h3>ئاماری قوتابخانەکان</h3>
+          <div class="mini-grid" id="schoolCounts"></div>
+        </section>
+        <section class="subpanel">
+          <h3>چالاکیەکان</h3>
+          <div class="mini-grid stats-grid" id="statCounts"></div>
+        </section>
+      </div>
+
+      <div class="inspector-actions inspector-actions-bottom">
+        <button type="button" class="button ghost" id="inspectorSaveButton">هەڵگرتن</button>
+        <button type="button" class="button print" id="inspectorPrintButton">چاپکردن</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="print-root" id="printRoot" aria-hidden="true"></div>
+
+  <datalist id="activityPresets">
+    <option value="ئامادەبوون لە فەرمانگە"></option>
+    <option value="پشوو"></option>
+    <option value="سەرپەرشتیاری قوتابخانە : "></option>
+    <option value="لێژنەی هەڵسەنگاندنی دەرەکی: "></option>
+  </datalist>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
