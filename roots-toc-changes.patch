@@ -1,0 +1,698 @@
+diff --git a/index.html b/index.html
+index bc5c091..9e7e3f0 100644
+--- a/index.html
++++ b/index.html
+@@ -385,100 +385,131 @@
+             color: #6c3526;
+         }
+ 
+-        .roots-shell {
++        .roots-toc-shell {
+             display: grid;
+             grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+             gap: 18px;
+             align-items: start;
+         }
+ 
+-        .roots-chat-log {
++        .roots-toc-main {
+             display: grid;
+-            max-height: min(68vh, 720px);
+-            min-height: 360px;
+-            gap: 12px;
+-            overflow: auto;
++            gap: 14px;
++        }
++
++        .roots-intro {
++            color: var(--muted);
++            margin: 6px 0 0;
++        }
++
++        .roots-topics {
++            display: flex;
++            flex-wrap: wrap;
++            gap: 8px;
++        }
++
++        .roots-topic-chip {
++            border: 1px solid rgba(66, 107, 86, 0.24);
++            border-radius: 999px;
++            background: rgba(66, 107, 86, 0.08);
++            color: var(--leaf-dark);
++            font: inherit;
++            font-weight: 800;
++            padding: 7px 14px;
++            cursor: pointer;
++        }
++
++        .roots-topic-chip:hover {
++            background: rgba(66, 107, 86, 0.16);
++        }
++
++        .roots-parts {
++            display: grid;
++            gap: 10px;
++        }
++
++        .roots-part {
+             border: 1px solid var(--line);
+             border-radius: 8px;
+             background: rgba(255, 255, 255, 0.72);
+-            padding: 14px;
++            padding: 4px 4px;
+         }
+ 
+-        .roots-message {
+-            width: min(100%, 780px);
+-            border: 1px solid rgba(222, 213, 199, 0.95);
+-            border-radius: 8px;
++        .roots-part[open] {
+             background: #fffdf7;
+-            padding: 13px 15px;
+-            direction: rtl;
+-            line-height: 1.75;
+-            text-align: right;
+         }
+ 
+-        .roots-message-user {
+-            justify-self: end;
+-            border-color: rgba(66, 107, 86, 0.25);
+-            background: rgba(66, 107, 86, 0.1);
++        .roots-part summary {
++            list-style: none;
++            cursor: pointer;
++            display: flex;
++            align-items: center;
++            justify-content: space-between;
++            gap: 10px;
++            padding: 10px 12px;
+         }
+ 
+-        .roots-message-bot {
+-            justify-self: start;
++        .roots-part summary::-webkit-details-marker {
++            display: none;
+         }
+ 
+-        .roots-message p,
+-        .roots-message h4,
+-        .roots-message ol,
+-        .roots-message ul {
+-            margin-top: 0;
++        .roots-part summary::after {
++            content: "+";
++            font-weight: 900;
++            color: var(--leaf-dark);
++            flex: none;
+         }
+ 
+-        .roots-message ol,
+-        .roots-message ul {
+-            padding-inline-start: 0;
+-            padding-inline-end: 24px;
++        .roots-part[open] summary::after {
++            content: "−";
+         }
+ 
+-        .roots-message h4 {
+-            margin-bottom: 6px;
+-            color: var(--leaf-dark);
+-            font-size: 1.05rem;
++        .roots-part-heading {
++            display: grid;
++            gap: 4px;
++            text-align: right;
+         }
+ 
+-        .roots-message li {
+-            margin-bottom: 8px;
++        .roots-part-title {
++            font-weight: 800;
++            color: var(--leaf-dark);
+         }
+ 
+-        .roots-message li p {
+-            margin: 5px 0 0;
++        .roots-part-pages {
+             color: var(--muted);
++            font-size: 0.9rem;
+         }
+ 
+-        .roots-message a,
+-        .roots-sources li {
+-            overflow-wrap: anywhere;
+-        }
+-
+-        .roots-generated {
+-            white-space: pre-wrap;
++        .roots-part-tags {
++            display: flex;
++            flex-wrap: wrap;
++            gap: 6px;
++            justify-content: flex-end;
+         }
+ 
+-        .roots-ai-note,
+-        .roots-thinking {
+-            border: 1px solid rgba(62, 109, 143, 0.2);
+-            border-radius: 8px;
++        .roots-part-tag {
++            border: 1px solid rgba(62, 109, 143, 0.25);
++            border-radius: 999px;
+             background: rgba(62, 109, 143, 0.08);
+             color: #24435a;
+-            padding: 8px 10px;
++            font-size: 0.78rem;
++            font-weight: 700;
++            padding: 2px 9px;
+         }
+ 
+-        .roots-chat-form {
+-            display: grid;
+-            gap: 10px;
+-            margin-top: 12px;
++        .roots-part-body {
++            padding: 4px 14px 14px;
++            line-height: 1.85;
++            color: #3b352c;
+         }
+ 
+-        .roots-chat-form textarea {
+-            min-height: 94px;
++        .roots-part-body p {
++            margin: 0 0 10px;
++        }
++
++        .roots-part.roots-part-highlight {
++            border-color: rgba(66, 107, 86, 0.6);
++            box-shadow: 0 0 0 2px rgba(66, 107, 86, 0.18);
+         }
+ 
+         .roots-side {
+@@ -499,27 +530,47 @@
+             font-size: 1.12rem;
+         }
+ 
+-        .roots-status,
+         .roots-stats {
+             color: var(--muted);
+             line-height: 1.6;
++            display: grid;
++            gap: 6px;
+         }
+ 
+-        .roots-stats {
++        .roots-assets-grid {
+             display: grid;
+-            gap: 6px;
++            gap: 10px;
++        }
++
++        .roots-asset-card {
++            display: flex;
++            align-items: center;
++            gap: 10px;
++            border: 1px solid rgba(66, 107, 86, 0.24);
++            border-radius: 8px;
++            background: rgba(66, 107, 86, 0.06);
++            color: var(--leaf-dark);
++            font: inherit;
++            font-weight: 800;
++            padding: 10px 12px;
++            text-decoration: none;
++        }
++
++        .roots-asset-card:hover {
++            background: rgba(66, 107, 86, 0.14);
++        }
++
++        .roots-asset-icon {
++            font-size: 1.3rem;
++            flex: none;
+         }
+ 
+-        .roots-suggestions,
+-        .roots-assets,
+         .roots-answer-links {
+             display: flex;
+             flex-wrap: wrap;
+             gap: 8px;
+         }
+ 
+-        .roots-suggestions button,
+-        .roots-asset-link,
+         .roots-answer-links a {
+             border: 1px solid rgba(66, 107, 86, 0.24);
+             border-radius: 8px;
+@@ -531,10 +582,6 @@
+             text-decoration: none;
+         }
+ 
+-        .roots-suggestions button {
+-            cursor: pointer;
+-        }
+-
+         .gallery-grid,
+         .admin-review-grid {
+             display: grid;
+@@ -1058,40 +1105,28 @@
+ 
+         <section class="app-section" id="rootsPanel" aria-live="polite">
+             <div class="section-heading">
+-                <h2>پرسیاری ڕەچەڵەک</h2>
++                <h2>ناوەڕۆکی کتێب — گوڵزاری مێژوو</h2>
++                <p class="roots-intro">کلیک لەسەر هەر بابەت یان بەشێک بکە بۆ خوێندنەوەی ناوەڕۆکەکەی، یان کلیک لەسەر هەر شەجەرەیەک بکە بۆ کردنەوەی وێنە/فایلەکەی.</p>
+             </div>
+-            <div class="roots-shell">
+-                <div>
+-                    <div class="roots-chat-log" id="rootsMessages">
+-                        <article class="roots-message roots-message-bot">
+-                            <p>سڵاو. پرسیارت دەربارەی باوک، باپیر، نەوە، بنەماڵە، هۆز، شوێن یان شەجەرە بنووسە. سەرەتا لە PDF ـی بنەماڵەدا دەگەڕێم؛ ئەگەر بەس نەبوو، تەنها سەرچاوەی دەرەکیی باوەڕپێکراو بەکاردەهێنم.</p>
+-                        </article>
++            <div class="roots-toc-shell">
++                <div class="roots-toc-main">
++                    <div class="roots-side-box">
++                        <h3>بابەتەکان</h3>
++                        <div class="roots-topics" id="rootsTopics"></div>
++                    </div>
++                    <div class="roots-side-box">
++                        <h3>ناوەڕۆکی کتێب بەپێی بەش</h3>
++                        <div class="roots-parts" id="rootsParts"></div>
+                     </div>
+-                    <form class="roots-chat-form" id="rootsChatForm">
+-                        <label>
+-                            <span>پرسیار</span>
+-                            <textarea id="rootsQuestion" rows="3" placeholder="نموونە: ڕەچەڵەکی مەلا ئەمین مەلا ساڵح چییە؟"></textarea>
+-                        </label>
+-                        <button class="button primary" type="submit">ناردنی پرسیار</button>
+-                    </form>
+                 </div>
+                 <aside class="roots-side">
+                     <div class="roots-side-box">
+                         <h3>ئەرشیف</h3>
+                         <div class="roots-stats" id="rootsStats"></div>
+                     </div>
+-                    <div class="roots-side-box">
+-                        <h3>پرسیاری خێرا</h3>
+-                        <div class="roots-suggestions">
+-                            <button type="button" data-roots-question="ڕەچەڵەکی مامۆستا مەلا ئەمین مەلا ساڵح چییە؟">مەلا ئەمین</button>
+-                            <button type="button" data-roots-question="مەموندییەکان لە کوێوە هاتوون؟">مەموندی</button>
+-                            <button type="button" data-roots-question="شەجەرەی بنەماڵە و پاشکۆکان پیشان بدە">شەجەرە</button>
+-                            <button type="button" data-roots-question="شوێنە گرنگەکانی ڕەچەڵەک چیین؟">شوێنەکان</button>
+-                        </div>
+-                    </div>
+                     <div class="roots-side-box">
+                         <h3>شەجەرە و پاشکۆ</h3>
+-                        <div class="roots-assets" id="rootsAssets"></div>
++                        <div class="roots-assets-grid" id="rootsAssets"></div>
+                     </div>
+                 </aside>
+             </div>
+@@ -2059,6 +2094,6 @@
+             showPanel(initial);
+         }
+     </script>
+-    <script src="/static/roots-chat.js?v=roots-person-rag-v23"></script>
++    <script src="/static/roots-index.js?v=roots-toc-v1"></script>
+ </body>
+ </html>
+diff --git a/static/roots-chat.js b/static/roots-chat.js
+index 3dfb4eb..a442ff8 100644
+--- a/static/roots-chat.js
++++ b/static/roots-chat.js
+@@ -219,19 +219,6 @@
+         return `PDF: ${result.path || result.title || "گولزاری مێژوو"}${pages}، پارچە ${result.id}`;
+     }
+ 
+-    function isMainFamilyQuestion(question) {
+-        return hasConcept(question, [
+-            "مامۆستا مەلا ئەمین", "مامۆستا مه لا ئه مین", "مەلا ئەمین", "مه لا ئه مین",
+-            "مەلا هەیمین", "مه لا هه مین", "مەلا ساڵح", "مهلا سالح", "مەلا سالح", "دوکەڵە",
+-        ]);
+-    }
+-
+-    function isMemundiQuestion(question) {
+-        return hasConcept(question, [
+-            "مەموندی", "مەموندییەکان", "مە موندی", "مهموندی", "مه موندی", "مەحمودی", "مەمۆیی",
+-        ]);
+-    }
+-
+     function wantsOrigin(question) {
+         return hasConcept(question, [
+             "لەکوێوە", "کوێوە", "کوێ", "هاتوون", "هاتنی", "بڵاوبوونەوە", "ڕەگ", "ڕیشە",
+@@ -301,61 +288,62 @@
+         return polishKurdishText(cleaned, 140);
+     }
+ 
++    function rankedSentences(question, results, maxSentences = 4, exclude = []) {
++        const terms = tokenize(question);
++        const normalizedTerms = terms.map(normalize);
++        const genealogy = wantsGenealogyContext(question);
++        const excludeKeys = new Set(exclude.filter(Boolean).map((line) => normalize(line).slice(0, 60)));
++        const seen = new Set(excludeKeys);
++        const scored = [];
++        results.slice(0, 6).forEach((result, resultIndex) => {
++            for (const sentence of sentences(result.text)) {
++                const key = normalize(sentence).slice(0, 60);
++                if (seen.has(key)) continue;
++                const normalizedSentence = normalize(sentence);
++                let score = 0;
++                for (const term of normalizedTerms) {
++                    if (normalizedSentence.includes(term)) {
++                        score += term.length > 4 ? 6 : 3;
++                    }
++                }
++                if (genealogy && relationWords.some((word) => normalizedSentence.includes(normalize(word)))) {
++                    score += 8;
++                }
++                if (/[0-9\u0660-\u0669]{4}/.test(sentence)) {
++                    score += 4;
++                }
++                score += Math.max(0, 6 - resultIndex);
++                if (score <= 0) continue;
++                seen.add(key);
++                scored.push({ sentence: cleanEvidence(sentence, 420), score });
++            }
++        });
++        return scored
++            .sort((a, b) => b.score - a.score)
++            .slice(0, maxSentences)
++            .map((item) => item.sentence);
++    }
++
+     function humanFallbackSummary(question, results, lineage, places) {
+-        const corpus = evidenceCorpus(results);
+-        const mainFamily = isMainFamilyQuestion(question);
+-        const memundiQuestion = isMemundiQuestion(question);
+-        const originQuestion = wantsOrigin(question);
+-        const hasMemundi = hasConcept(corpus, ["مەموندی", "مە موندی", "مهموندی", "مه موندی"]);
+-        const hasMarwani = hasConcept(corpus, ["مەروانی", "مه روانی", "میرنشینی مەروانی"]);
+-        const hasMethod = hasConcept(corpus, ["شارەزا", "باپیران", "سەرچاوە مێژوویی", "وردبینی", "2019"]);
+-        const tree = [];
++        const direct = lineage[0] || "";
++        const extra = rankedSentences(question, results, 3, [direct]);
++        const combined = unique([direct, ...extra].filter(Boolean))
++            .map((line) => polishKurdishText(line, 340))
++            .slice(0, 3);
+ 
+         let answer = "";
+-        if (!mainFamily && memundiQuestion && originQuestion) {
+-            answer = "بەپێی PDF ـی بنەماڵە، هاتنی مەموندییەکان یەک وەڵامی کۆتایی نییە؛ بەڵام نزیکترین ڕێڕەو جزیرە، هەکاری و حەلەب دەخاتەوە، دواتر بەرەو دیاربەکر، مووسڵ، موکریان و هەولێر.";
+-            tree.push("جزیرە / هەکاری / حەلەب ← دیاربەکر / مووسڵ / موکریان ← هەولێر");
+-        } else if (!mainFamily && memundiQuestion) {
+-            answer = "لە کتێبی «گولزاری مێژوو»دا مەموندییەکان وەک هۆز و ڕەگێکی پەیوەندیدار بە ناوچەکانی باکوری کوردستان و دەوروبەری دیاربەکر و هەولێر باسکراون. کتێبەکە هەندێک بۆچوون دەهێنێت کە ناوەکە لە مەحمود، مەمۆیی یان پەیوەندییەکانی دەوڵەتی مەروانی نزیک دەکاتەوە.";
+-        } else if (mainFamily) {
+-            answer = hasMemundi
+-                ? "بەپێی کتێبی «گولزاری مێژوو»، بنەماڵەی مامۆستا مەلا ئەمین مەلا ساڵح لە چوارچێوەی بنەماڵەیەکی مامۆستایانی ئایینی باسکراوە و پەیوەندییەکەی بە هۆزی مەموندی دەبەستێتەوە."
+-                : "بەپێی کتێبی «گولزاری مێژوو»، ئەم پرسیارە پەیوەندی بە بنەماڵەی مامۆستا مەلا ئەمین مەلا ساڵحەوە هەیە. لە پارچەکانی داتا زنجیرەی وردی باوک و باپیر بە تەواوی دەرنەکەوت، بەڵام بنەماڵەکە وەک بنەماڵەیەکی ناسراوی خێزانی و ئایینی باسکراوە.";
+-            if (hasMemundi) {
+-                tree.push("هۆزی مەموندی ← بنەماڵەی مامۆستا مەلا ئەمین مەلا ساڵح");
+-            }
++        if (combined.length) {
++            answer = `بەپێی کتێبی «گولزاری مێژوو»، ${combined.join(" ")}`;
+         } else {
+-            const polished = polishKurdishText(lineage[0] || snippetFor(results[0]?.text || "", question, 80, 320), 340);
+-            answer = polished
+-                ? `لە کتێبی «گولزاری مێژوو»دا نزیکترین زانیاری بۆ پرسیارەکەت ئەمەیە: ${polished}`
+-                : "لە داتاکانی ئەرشیفدا زانیارییەکی تەواو و ڕاستەوخۆ بۆ ئەم پرسیارە نەدۆزرایەوە. ئەگەر ناوی باوک، باپیر، گوند یان ساڵێک زیاد بکەیت، وەڵامەکە وردتر دەبێت.";
+-        }
+-
+-        let context = "";
+-        if (!mainFamily && memundiQuestion && originQuestion) {
+-            context = "PDF ـەکە ئەمە زیاتر وەک کۆکردنەوە و بۆچوون دەخاتەڕوو، نەک دڵنیایی تەواو.";
+-        } else if (mainFamily && hasMarwani) {
+-            context = "کتێبەکە هەندێک پەیوەندیی مێژوویی لە نێوان مەموندییەکان و میرانی مەروانی باس دەکات؛ ئەمە باشترە وەک ڕیوایەتێکی مێژوویی بخوێندرێتەوە، نەک زنجیرەی کۆتایی باپیران.";
++            answer = "لە داتاکانی ئەرشیفدا زانیارییەکی تەواو و ڕاستەوخۆ بۆ ئەم پرسیارە نەدۆزرایەوە. ئەگەر ناوی باوک، باپیر، گوند یان ساڵێک زیاد بکەیت، وەڵامەکە وردتر دەبێت.";
+         }
+ 
+-        const onlineContext = wantsGenealogyContext(question) || memundiQuestion
+-            ? "لە مێژووی کوردیدا ناسنامەی هۆز و بنەماڵە زۆرجار بە ناوچە، کۆچ و پەیوەندیی خێزانی تێکەڵ دەبێت، بۆیە وردیی زنجیرەکە پێویستی بە شەجەرەی تایبەت هەیە."
++        const tree = lineage.length > 1 ? lineage.slice(1, 3).join("، ") : "";
++        const context = combined.length > 1
++            ? "ئەم وەڵامە کورتکراوەیەکی چەند پارچەیەکی PDF ـە؛ بۆ وردی زیاتر بەشی سەرچاوەکان ببینە."
+             : "";
+ 
+-        const caution = memundiQuestion
+-            ? ""
+-            : hasMethod
+-            ? "زنجیرەی وردی باوک و باپیر پێویستی بە شەجەرە یان بەڵگەی تایبەتی خێزان هەیە."
+-            : "ئەگەر دەتەوێت زنجیرەی باوک-باپیر بە وردی دەرچێت، پرسیارەکە بە ناوی باوک یان ناوی گوندەوە بنووسە.";
+-
+-        return {
+-            answer,
+-            tree: tree.join("، "),
+-            context,
+-            onlineContext,
+-            caution,
+-            places,
+-        };
++        return { answer, tree, context, places };
+     }
+ 
+     function prepareKnowledge(data) {
+diff --git a/static/roots-index.js b/static/roots-index.js
+new file mode 100644
+index 0000000..12fc316
+--- /dev/null
++++ b/static/roots-index.js
+@@ -0,0 +1,239 @@
++(() => {
++    const dataUrl = "/static/roots-knowledge.json?v=pdf-rag-v23";
++    const rootsPanel = document.getElementById("rootsPanel");
++    const rootsStats = document.getElementById("rootsStats");
++    const rootsTopics = document.getElementById("rootsTopics");
++    const rootsParts = document.getElementById("rootsParts");
++    const rootsAssets = document.getElementById("rootsAssets");
++
++    if (!rootsPanel || !rootsParts) {
++        return;
++    }
++
++    // Chunks per table-of-contents entry. Smaller = more, shorter entries.
++    const CHUNKS_PER_PART = 6;
++
++    // Topic anchors used to tag each part of the book and to build the
++    // "بابەتەکان" (topics) quick-jump index. Add more terms/topics here as
++    // the underlying book content grows — nothing else needs to change.
++    const TOPICS = [
++        { id: "main-family", label: "بنەماڵەی سەرەکی", terms: ["مامۆستا مه لا ئه مین", "مامۆستا مەلا ئەمین", "مه لا سالح", "مەلا ساڵح", "مه لا هه مین"] },
++        { id: "dukala", label: "گوندی دوکەڵە", terms: ["دوكهڵ", "دوکەڵە"] },
++        { id: "memundi", label: "هۆزی مەموندی", terms: ["مه موندی", "مەموندی", "مەحمودی"] },
++        { id: "marwani", label: "میرنشینی مەروانی", terms: ["مه روانی", "مەروانی"] },
++        { id: "dizayee", label: "بنەماڵەی دزەیی", terms: ["دزەیی", "دزه یی"] },
++        { id: "sadat", label: "بنەماڵەی سادات", terms: ["سادات"] },
++        { id: "naqshbandi", label: "تەریقەتی نەقشبەندی", terms: ["نەقشبەندی", "نه قشبه ندی"] },
++        { id: "education", label: "خوێندن و بەکالۆریۆس", terms: ["خوێندن", "بەکالۆریۆس", "زانکۆ", "دیپلۆم"] },
++        { id: "career", label: "پەروەردە و خزمەت", terms: ["به رێوهبهر", "بەڕێوەبەر", "سەرپەرشتیار", "مانگی سوور", "پەروەردە"] },
++        { id: "places", label: "شوێن و ناوچەکان", terms: ["هەولێر", "بەغدا", "شێخان", "زاخۆ", "سلێمانی", "دیاربەکر", "مووسڵ", "موکریان"] },
++        { id: "lineage", label: "شەجەرە و ڕەچەڵەک", terms: ["تیرەی", "شەجەرە", "نەسەب", "باپیر", "هۆز", "عەشیرەت"] },
++    ];
++
++    function escapeHtml(value) {
++        return String(value || "")
++            .replaceAll("&", "&amp;")
++            .replaceAll("<", "&lt;")
++            .replaceAll(">", "&gt;")
++            .replaceAll('"', "&quot;")
++            .replaceAll("'", "&#039;");
++    }
++
++    function normalize(value) {
++        return String(value || "")
++            .toLowerCase()
++            .replace(/[يى]/g, "ی")
++            .replace(/[ك]/g, "ک")
++            .replace(/[ة]/g, "ە")
++            .replace(/[ؤ]/g, "و")
++            .replace(/[إأٱآ]/g, "ا")
++            .replace(/[ئ]/g, "")
++            .replace(/[ڕ]/g, "ر")
++            .replace(/[ڵ]/g, "ل")
++            .replace(/[ێ]/g, "ی")
++            .replace(/[ۆ]/g, "و")
++            .replace(/[ًٌٍَُِّْـ]/g, "")
++            .replace(/[‌\u200c]/g, " ")
++            .replace(/\s+/g, " ")
++            .trim();
++    }
++
++    // Basic OCR clean-up: collapses accidental repeated runs of text and
++    // fixes the most common Kurdish character variants, without inventing
++    // or altering any actual words/facts.
++    function cleanText(value, maxLength = 4000) {
++        let text = String(value || "")
++            .replace(/[ك]/g, "ک")
++            .replace(/[يى]/g, "ی")
++            .replace(/\s+([،.؛؟!])/g, "$1")
++            .replace(/([،؛؟!])(?=\S)/g, "$1 ")
++            .replace(/\s+/g, " ")
++            .trim();
++        for (let pass = 0; pass < 4; pass += 1) {
++            let changed = false;
++            for (let length = 35; length <= Math.min(180, Math.floor(text.length / 2)); length += 5) {
++                const prefix = text.slice(0, length);
++                const repeatAt = text.indexOf(prefix, Math.max(1, length - 8));
++                if (repeatAt > 0 && repeatAt < length + 50) {
++                    text = `${text.slice(0, repeatAt)} ${text.slice(repeatAt + prefix.length)}`.replace(/\s+/g, " ").trim();
++                    changed = true;
++                    break;
++                }
++            }
++            if (!changed) break;
++        }
++        return text.slice(0, maxLength);
++    }
++
++    function paragraphs(text) {
++        const sentences = String(text || "")
++            .split(/(?<=[.؟!؛])\s+|\n+/u)
++            .map((item) => item.trim())
++            .filter(Boolean);
++        const groups = [];
++        for (let i = 0; i < sentences.length; i += 3) {
++            groups.push(sentences.slice(i, i + 3).join(" "));
++        }
++        return groups.length ? groups : [text];
++    }
++
++    function buildParts(chunks) {
++        const parts = [];
++        for (let i = 0; i < chunks.length; i += CHUNKS_PER_PART) {
++            const group = chunks.slice(i, i + CHUNKS_PER_PART);
++            const pages = group.flatMap((chunk) => chunk.pages || []);
++            const startPage = pages.length ? Math.min(...pages) : "";
++            const endPage = pages.length ? Math.max(...pages) : "";
++            const text = cleanText(group.map((chunk) => chunk.text || "").join(" "));
++            const normalizedText = normalize(text);
++            const tags = TOPICS.filter((topic) =>
++                topic.terms.some((term) => normalizedText.includes(normalize(term)))
++            );
++            parts.push({
++                index: parts.length,
++                startPage,
++                endPage,
++                text,
++                tags,
++            });
++        }
++        return parts;
++    }
++
++    function buildTopicIndex(parts) {
++        return TOPICS.map((topic) => {
++            const matchingParts = parts
++                .filter((part) => part.tags.some((tag) => tag.id === topic.id))
++                .map((part) => part.index);
++            return { ...topic, matchingParts };
++        }).filter((topic) => topic.matchingParts.length > 0);
++    }
++
++    function assetIcon(url) {
++        return /\.pdf($|\?)/i.test(url) ? "📄" : "🖼️";
++    }
++
++    function renderStats(knowledge) {
++        if (!rootsStats) return;
++        rootsStats.innerHTML = `
++            <span>${knowledge.documents.length} بەڵگەنامە</span>
++            <span>${knowledge.chunks.length} پارچەی سەرچاوە</span>
++            <span>${knowledge.assets.length} شەجەرە و پاشکۆ</span>
++        `;
++    }
++
++    function renderAssets(knowledge) {
++        if (!rootsAssets) return;
++        rootsAssets.innerHTML = knowledge.assets.map((asset) => `
++            <a class="roots-asset-card" href="${escapeHtml(asset.url)}" target="_blank" rel="noopener">
++                <span class="roots-asset-icon">${assetIcon(asset.url)}</span>
++                <span>${escapeHtml(asset.title)}</span>
++            </a>
++        `).join("");
++    }
++
++    function renderTopics(topics) {
++        if (!rootsTopics) return;
++        if (!topics.length) {
++            rootsTopics.innerHTML = `<p>هیچ بابەتێک نەدۆزرایەوە.</p>`;
++            return;
++        }
++        rootsTopics.innerHTML = topics.map((topic) => `
++            <button type="button" class="roots-topic-chip" data-jump-part="${topic.matchingParts[0]}">
++                ${escapeHtml(topic.label)}
++            </button>
++        `).join("");
++        rootsTopics.querySelectorAll("[data-jump-part]").forEach((button) => {
++            button.addEventListener("click", () => {
++                const partIndex = Number(button.getAttribute("data-jump-part"));
++                jumpToPart(partIndex);
++            });
++        });
++    }
++
++    function renderParts(parts) {
++        rootsParts.innerHTML = parts.map((part) => {
++            const pageLabel = part.startPage
++                ? (part.startPage === part.endPage ? `لاپەڕە ${part.startPage}` : `لاپەڕە ${part.startPage}-${part.endPage}`)
++                : "";
++            return `
++                <details class="roots-part" id="roots-part-${part.index}">
++                    <summary>
++                        <div class="roots-part-heading">
++                            <span class="roots-part-title">بەشی ${part.index + 1}</span>
++                            <span class="roots-part-pages">${escapeHtml(pageLabel)}</span>
++                        </div>
++                        <div class="roots-part-tags">
++                            ${part.tags.slice(0, 3).map((tag) => `<span class="roots-part-tag">${escapeHtml(tag.label)}</span>`).join("")}
++                        </div>
++                    </summary>
++                    <div class="roots-part-body">
++                        ${paragraphs(part.text).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
++                    </div>
++                </details>
++            `;
++        }).join("");
++    }
++
++    function jumpToPart(partIndex) {
++        const element = document.getElementById(`roots-part-${partIndex}`);
++        if (!element) return;
++        element.setAttribute("open", "true");
++        element.scrollIntoView({ behavior: "smooth", block: "center" });
++        element.classList.add("roots-part-highlight");
++        setTimeout(() => element.classList.remove("roots-part-highlight"), 1600);
++    }
++
++    async function init() {
++        if (rootsParts) {
++            rootsParts.innerHTML = `<p>ناوەڕۆک بارکراوە...</p>`;
++        }
++        try {
++            const response = await fetch(dataUrl, { cache: "no-store" });
++            if (!response.ok) {
++                throw new Error("کۆرپەی زانیارییەکان نەخوێندرایەوە.");
++            }
++            const knowledge = await response.json();
++            const parts = buildParts(knowledge.chunks || []);
++            const topics = buildTopicIndex(parts);
++            renderStats(knowledge);
++            renderAssets(knowledge);
++            renderTopics(topics);
++            renderParts(parts);
++        } catch (error) {
++            if (rootsParts) {
++                rootsParts.innerHTML = `<p>${escapeHtml(error.message)}</p>`;
++            }
++        }
++    }
++
++    let loaded = false;
++    window.loadRootsKnowledge = () => {
++        if (loaded) return;
++        loaded = true;
++        init();
++    };
++    if (location.hash.replace("#", "") === "roots") {
++        window.loadRootsKnowledge();
++    }
++})();
